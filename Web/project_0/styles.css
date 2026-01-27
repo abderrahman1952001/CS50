@@ -1,0 +1,164 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    color: black;
+    background: white;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    
+}
+
+.header {
+    padding: 15px 20px;
+}
+
+.links {
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px; 
+}
+
+.links a {
+    color: black;
+    font-size: 15px;
+    text-decoration: none;
+}
+
+.links a:hover {
+    text-decoration: underline;
+}
+
+
+
+.main {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+}
+
+.centered {
+    justify-content: center;
+    align-items: center;
+}
+
+.top-left {
+    justify-content: flex-start;
+    align-items: stretch;
+    padding: 25px 40px;
+}
+
+.logo {
+    padding: 10px;
+    margin: 10px;
+    font-size: 100px;
+    font-weight: bold;
+}
+
+.logo span {
+    color: red;
+    font-size: 30px;
+}
+
+.form {
+    width: 90vw;
+    max-width: 700px;
+    
+}
+
+.input {
+    width: 100%;
+    height: 50px;
+    border: 1px solid lightgray;
+    border-radius: 50px;
+    padding: 5px 20px;
+    font-size: 20px;
+
+}
+
+.input:hover {
+    box-shadow: 5px 5px 6px lightgray;
+    border-color: transparent;
+}
+
+.input:focus-visible {
+    outline: none;
+    box-shadow: 5px 5px 6px lightgray;
+    border-color: transparent;
+  }
+
+
+.btns {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.btn {
+    height: 40px;
+    background: lightgray;
+    color: black;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    padding: 5px 15px;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.btn:hover {
+    box-shadow: 1px 1px 6px lightgray;
+    border-color: lightgray;
+}
+
+.field {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    align-items: center;
+    gap: 12px;
+    margin: 20px 5px;
+}
+
+.field label {
+    font-size: 16px;
+}
+
+.field input {
+    height: 40px;
+    padding: 5px 10px;
+    border: 1px solid lightgray;
+    border-radius: 5px;
+    font-size: 20px;
+}
+
+.field input:hover {
+    box-shadow: 1px 1px 6px lightgray;
+    border-color: transparent;   
+}
+
+.field input:focus-visible {
+    outline: none;
+    box-shadow: 1px 1px 6px lightgray;
+    border-color: transparent;
+  }
+
+.btn-advanced {
+    height: 40px;
+    background-color: blue;
+    color: white;
+    border: 1px solid transparent;
+    border-radius: 5px;
+    padding: 5px 15px;
+    font-size: 15px;
+    cursor: pointer;
+
+}
+
+.btn-advanced:hover {
+    box-shadow: 1px 1px 6px lightgray;
+    border-color: transparent;
+}
