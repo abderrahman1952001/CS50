@@ -87,6 +87,9 @@ def edit(request, title):
             new_content = form.cleaned_data["content"].strip()
             util.save_entry(title, new_content)
             return redirect("encyclopedia:entry", title=title)
+        return render(request, "encyclopedia/edit.html", {
+                                "title": title,    
+                                "form": form})
           
     form = EditEntryForm(initial={"content": existing_content})
     return render(request, "encyclopedia/edit.html", {

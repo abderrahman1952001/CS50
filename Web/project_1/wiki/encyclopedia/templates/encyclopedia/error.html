@@ -1,0 +1,12 @@
+{% extends "encyclopedia/layout.html" %}
+
+{% block title %}
+{{ title }} Not Found
+{% endblock %}
+
+{% block body %}
+<h2>{{ title }} Not Found</h2>
+<p>{{ message }}</p>
+
+{{ content | safe }}
+{% endblock %}
