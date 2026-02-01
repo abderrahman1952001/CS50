@@ -1,0 +1,103 @@
+  {% extends "auctions/layout.html" %}
+
+{% block title %}{{ listing.title }}{% endblock %}
+
+{% block body %}
+
+  <div class="container mt-4">
+  <div class="card">
+    <div class="card-body">
+      <div class="listing_row">
+        <div class="image image_detail">
+          {% if listing.image_url %}
+            <img src="{{ listing.image_url }}" alt="Image of {{ listing.title }}">
+          {% else %}
+            <div class="img_placeholder">No image available</div>
+          {% endif %}
+        </div>
+
+        <div class="info">
+          <h2 class="h4 mb-2">{{ listing.title }}</h2>
+          <p class="mb-2">{{ listing.description }}</p>
+
+          <p class="mb-1"><strong>Current Price:</strong> ${{ current_price }}</p>
+          <p class="mb-1 text-muted">Starting Bid: ${{ listing.starting_bid }}</p>
+          {% if listing.category %}
+            <p class="mb-3 text-muted">Category: {{ listing.category.name }}</p>
+          {% endif %}
+
+          {% if user.is_authenticated %}
+            <form action="{% url 'toggle_watch' listing.id %}" method="post" class="d-inline">
+              {% csrf_token %}
+              <button type="submit" class="btn btn-outline-primary btn-sm">
+                {% if watched %}Remove from Watchlist{% else %}Add to Watchlist{% endif %}
+              </button>
+            </form>
+          {% endif %}
+
+          {% if listing.owner == user and listing.is_active %}
+            <form action="{% url 'close_listing' listing.id %}" method="post" class="d-inline ml-2">
+              {% csrf_token %}
+              <button type="submit" class="btn btn-outline-danger btn-sm">Close Listing</button>
+            </form>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mt-3">
+    <div class="col-md-6 mb-3">
+      <div class="card">
+        <div class="card-body">
+          <h3 class="h5">Bids</h3>
+          <p class="text-muted mb-2">{{ bids_count }} bids so far.</p>
+
+          {% if listing.is_active %}
+            {% if user.is_authenticated %}
+              <form action="{% url 'place_bid' listing.id %}" method="post">
+                {% csrf_token %}
+                {{ bid_form.as_p }}
+                <button type="submit" class="btn btn-success">Place Bid</button>
+              </form>
+            {% else %}
+              <p><a href="{% url 'login' %}">Log in</a> to place a bid.</p>
+            {% endif %}
+          {% else %}
+            <div class="alert alert-secondary mb-0">This listing is closed.</div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6 mb-3">
+      <div class="card">
+        <div class="card-body">
+          <h3 class="h5">Comments</h3>
+
+          <div class="list-group mb-3">
+            {% for comment in comments %}
+              <div class="list-group-item">
+                <strong>{{ comment.author.username }}</strong>
+                <div>{{ comment.content }}</div>
+              </div>
+            {% empty %}
+              <div class="list-group-item text-muted">No comments yet.</div>
+            {% endfor %}
+          </div>
+
+          {% if user.is_authenticated %}
+            <form action="{% url 'add_comment' listing.id %}" method="post">
+              {% csrf_token %}
+              {{ comment_form.as_p }}
+              <button type="submit" class="btn btn-primary">Add Comment</button>
+            </form>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <a href="{% url 'index' %}" class="btn btn-link px-0">Back to Active Listings</a>
+</div>
+{% endblock %}

@@ -1,0 +1,91 @@
+{% extends "auctions/layout.html" %}
+
+{% block title %}{{ listing.title }}{% endblock %}
+
+{% block body %}
+
+    <h2>Listing: {{ listing.title }}</h2>
+
+    {% if listing.image_url %}
+        <img src="{{ listing.image_url }}" alt="Image of {{ listing.title }}" >
+    {% endif %}
+    
+    <p>{{ listing.description }}</p>
+    
+    <p>Starting Bid: ${{ listing.starting_bid }}</p>
+
+    {% if listing.category %}
+        <p>Category: {{ listing.category.name }}</p>
+    {% endif %}
+    
+    <p><b>Current Price:</b> ${{ current_price }}</p>
+
+    {% if user.is_authenticated %}
+        <form action="{% url 'toggle_watch' listing.id %}" method="post">
+            {% csrf_token %}
+            <button type="submit">
+                {% if watched %}
+                    Remove from Watchlist
+                {% else %}
+                    Add to Watchlist
+                {% endif %}
+            </button>
+        </form>
+    {% endif %}
+
+
+    {% if listing.is_active %}
+        <h3>Bids:</h3>
+        <p>{{ bids_count }} bids so far.</p>
+
+        {% if user.is_authenticated %}
+            <form action="{% url 'place_bid' listing.id %}" method="post">
+                {% csrf_token %}
+                {{ bid_form.as_p }}
+                <button type="submit">Place Bid</button>
+            </form>
+        {% else %}
+        <p><a href="{% url 'login' %}">Log in</a> to place a bid.</p>
+        {% endif %}
+
+        {% if listing.owner == user %}
+            <form action="{% url 'close_listing' listing.id %}" method="post">
+                {% csrf_token %}
+                <button type="submit">Close Listing</button>
+            </form>
+        {% endif %}
+    {% else %}
+        <h3>This listing is closed.</h3>
+        {% if listing.winner %}
+            {% if listing.winner == user %}
+                <p>You won this auction with a bid of ${{ current_price }}.</p>
+            {% endif %}
+            <p>Winner of this auction is {{ listing.winner.username }} with a bid of ${{ current_price }}.</p>
+        {% else %}
+            <p>No bids were placed on this listing.</p>
+        {% endif %}
+    {% endif %}
+
+
+    <h2>Comments:</h2>
+    {% for comment in comments %}
+        <div class="comment">
+            <p><b>{{ comment.author.username }}</b>: {{ comment.content }}</p>
+        </div>
+    {% empty %}
+        <p>No comments yet.</p>
+    {% endfor %}
+
+    {% if user.is_authenticated %}
+        <h3>Add a Comment</h3>
+        <form action="{% url 'add_comment' listing.id %}" method="post">
+                    {% csrf_token %}
+                    {{ comment_form.as_p }}
+                    <button type="submit">Add Comment</button>
+        </form>
+    {% endif %}
+
+    <a href="{% url 'index' %}" >Back to Index page</a>
+
+{% endblock %}
+
