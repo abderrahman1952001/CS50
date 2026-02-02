@@ -1,3 +1,145 @@
 textarea {
     min-height: 400px;
 }
+
+.email-list {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+.email-item {
+    margin: 8px 0;
+}
+
+.email-row {
+    display: grid;
+    grid-template-columns: 300px 1fr 180px;
+    gap: 12px;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    cursor: pointer;
+    width: 100%;
+    text-align: left;
+    background: #fff;
+    color: inherit;
+    font: inherit;
+
+    transition: 
+        transform 120ms ease,
+        box-shadow 120ms ease,
+        background-color 120ms ease,
+        border-color 120ms ease;
+}
+
+.email-row > * {
+  min-width: 0;
+}
+
+
+/* Hover: lift + subtle shadow */
+.email-row:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08);
+  border-color: #cfd4da;
+  background: #f8f9fa;
+}
+
+/* Pressed: small “down” feedback */
+.email-row:active {
+  transform: translateY(0px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
+}
+
+.email-row .email-timestamp {
+  justify-self: end;
+  white-space: nowrap;
+  font-size: 0.9em;
+  opacity: 0.75;
+}
+
+
+.email-row:focus-visible {
+    outline: 2px solid #f4f4f4;
+    outline-offset: 2px;
+}
+
+.email-row.read {
+    background-color: rgb(167, 167, 167);
+    color: white;
+}
+
+.email-row.unread {
+    background-color: white;
+    font-weight: bold;
+}
+
+.email-row .email-subject, .email-fromto {
+    white-space: nowrap;
+    overflow: hidden;   
+    text-overflow: ellipsis;
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .email-row { transition: none; }
+  .email-row:hover, .email-row:active { transform: none; box-shadow: none; }
+}
+
+
+/*  */
+
+
+#email-view {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.email-detail {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.email-detail-header {
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 14px;
+  background: #fff;
+}
+
+.email-detail-header p,
+.email-detail-header time {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin: 0 0 8px 0;
+}
+
+.email-detail-header strong {
+  width: 90px;         
+  color: #6c757d;      
+  font-weight: 600;
+}
+
+.email-detail-body {
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 14px;
+  background: #f8f9fa;
+}
+
+.email-body {
+  margin: 0;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  font-family: inherit;
+  line-height: 1.45;
+}
+
+.email-detail-actions {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}

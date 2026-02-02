@@ -120,3 +120,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# Django 3.x projects upgraded to Django 5.x should set an explicit default PK type.
+DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
